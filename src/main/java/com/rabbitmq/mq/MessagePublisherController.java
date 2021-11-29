@@ -17,11 +17,19 @@ public class MessagePublisherController {
 
     @PostMapping("/mq/publish")
     public String publishMessage(@RequestBody CustomMessage message){
+        String responseString = "Message Posted";
+
         message.setMessageId(UUID.randomUUID().toString());
         message.setMessageType("1");
         message.setMessageDate(new Date());
-        template.convertAndSend(MQConfig.api_exchange , MQConfig.api_routingkey, message);
+        try{
+            template.convertAndSend(MQConfig.api_exchange , MQConfig.api_routingkey, message);
+        }catch (Exception ex){
+           // System.out.println(ex.getMessage());
+            responseString = "Message Post Failed";
+        }
 
-        return "Message Posted";
+
+        return responseString;
     }
 }

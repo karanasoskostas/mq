@@ -8,6 +8,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Getter
+@Setter
 
 public class CustomMessage {
 
